@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^3.1.10"
+  },
+  "name": "api",
+  "version": "1.0.0",
+  "description": "the backend of social network",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ehsanullah946/Social-network-api.git"
+  },
+  "author": "Ehsanullah akabari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ehsanullah946/Social-network-api/issues"
+  },
+  "homepage": "https://github.com/Ehsanullah946/Social-network-api#readme"
+}
