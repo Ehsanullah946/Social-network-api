@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-// const userController = require('../controllers/users');
+const commentController = require('../controllers/comments');
 
-// router.get("");
+router.get("/",commentController.getComments);
+router.post("/",commentController.addComments);
 
 module.exports = router;
