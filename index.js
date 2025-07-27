@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const multer = require("multer");
 
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -21,6 +22,24 @@ app.use(cors({
     origin:"http://localhost:3000"
 }));
 app.use(cookieParser());
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../client/public/uploads')
+  },
+  filename: function (req, file, cb) {
+      cb(null, Date.now() + file.originalname);
+  }
+})
+
+const upload = multer({ storage: storage })
+
+app.post('/api/uploads', upload.single("file"), (req, res) => {
+    const file = req.file;
+    res.status(200).json(file.filename);
+})
+
 
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
