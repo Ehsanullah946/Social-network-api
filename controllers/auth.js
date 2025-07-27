@@ -57,5 +57,8 @@ exports.login = (req,res) => {
 
 }
 exports.logout = (req,res) => {
-    
+    res.clearCookie("accessToken", {
+        secure: true,
+        sameSite:"none" 
+    }).status(200).json("you are logout successfuly");
 }
