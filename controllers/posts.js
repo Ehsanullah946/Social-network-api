@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 
 exports.getPosts = (req, res) => {
 
+    const userId = req.query.userId;
+
+
     const token = req.cookies.accessToken;
     
     if (!token) return res.status(401).json("NOT logged in! please login first");
@@ -11,10 +14,13 @@ exports.getPosts = (req, res) => {
     jwt.verify(token, "secretkey", (err, userInfo) => {
         if (err) return res.status(401).json("Not valid token");
         
-        const q = `SELECT p.*, u.id AS userId,name, profilePic FROM posts AS p JOIN users AS u ON (u.id=p.userId) 
+        const q = userId ? ` SELECT p.*, u.id AS userId,name, profilePic FROM posts AS p JOIN users AS u ON (u.id=p.userId) WHERE p.userId=? `
+            : `SELECT p.*, u.id AS userId,name, profilePic FROM posts AS p JOIN users AS u ON (u.id=p.userId) 
         LEFT JOIN relationships AS r ON (p.userId = r.followedUserId) WHERE r.followerUserId=? OR p.userId=?
-        ORDER BY p.createdAt DESC`
-        db.query(q,[userInfo.id,userInfo.id], (err, data) => {
+        ORDER BY p.createdAt DESC`;
+
+        const value = userId ? [userId] : [userInfo.id, userInfo.id];
+        db.query(q,value, (err, data) => {
             if (err) return res.status(500).json(err);
             return res.status(200).json(data);
         })
