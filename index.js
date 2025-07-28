@@ -12,12 +12,12 @@ const commentRouter = require("./routes/comments");
 const authRouter = require("./routes/auth");
 
 
+app.use(express.json());
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
     next();
 })
 
-app.use(express.json());
 app.use(cors({
     origin:"http://localhost:3000"
 }));
